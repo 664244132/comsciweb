@@ -1,0 +1,867 @@
+:root 
+{
+    /* กำหนดตัวแปรสี (CSS Variables) เพื่อให้เรียกใช้และแก้ไขง่าย */
+    --primary-blue: #0056b3; /* สีน้ำเงินหลัก */
+    --light-blue: #e6f0fa; /* สีน้ำเงินอ่อนสำหรับพื้นหลัง */
+    --text-dark: #333333; /* สีตัวอักษรหลัก */
+    --text-gray: #666666; /* สีตัวอักษรรอง */
+    --white: #ffffff; /* สีขาว */
+    --border-color: #e0e0e0; /* สีเส้นขอบ */
+    --dark-blue: #0a2540; /* สีน้ำเงินเข้มสำหรับ Footer */
+    --bg-main: #f8f9fa; /* สีพื้นหลังหลักของเว็บ */
+}
+/* จบการทำงานส่วน root */
+
+
+* 
+{
+/* Reset ค่าเริ่มต้นของบราวเซอร์ เพื่อไม่ให้มีช่องว่างเกินมา */
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* ให้ padding ไม่เพิ่มขนาดความกว้างของกล่อง */
+    font-family: 'Kanit', sans-serif; /* ใช้ฟอนต์ Kanit กับทุกส่วน */
+}
+/* จบการทำงานส่วน '*' */
+
+/* ทำให้รูปภาพทุกรูปในเว็บยืดหยุ่น (Responsive Images) อัตโนมัติ */
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+body 
+{
+/* กำหนดสีพื้นหลังและสีตัวอักษรของทั้งหน้าเว็บ */
+    background-color: #f8f9fa;
+    background-color: var(--bg-main);
+    color: var(--text-dark);
+    line-height: 1.6; /* ระยะห่างระหว่างบรรทัดให้อ่านง่าย */
+    overflow-wrap: break-word; /* ป้องกันข้อความยาวๆ ทะลุกล่องเวลาผู้ใช้ซูมหน้าจอ */
+}
+/* จบการทำงานส่วน body */
+
+.container 
+{
+    /* กล่องควบคุมความกว้างของเนื้อหาให้อยู่ตรงกลางจอ */
+    max-width: 1600px;
+    margin: 0 auto; /* ซ้ายขวา auto ทำให้บล็อกอยู่กึ่งกลาง */
+    padding: 0 20px; /* แก้ไขจาก auto เป็น 20px เพราะ padding ใช้ค่า auto ไม่ได้ */
+}
+/* จบการทำงานส่วน container */
+
+/* =========================================
+CSS ส่วนของแถบข้อมูลด้านบน (Top Bar)
+========================================= */
+.top-bar 
+{
+    background-color: #f8f9fa;
+    background-color: var(--bg-main);
+    border-bottom: 1px solid var(--border-color); /* Note: ตัวแปร --border-color ยังไม่ได้ประกาศใน :root นะครับ อย่าลืมไปเพิ่มด้วย */
+    font-size: 0.95rem;
+    color: var(--text-gray);
+    padding: 8px 0;
+}
+
+.top-bar-inner 
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap; /* อนุญาตให้เนื้อหาตกลงมาบรรทัดใหม่ได้เวลาซูมเข้า */
+    gap: 10px; /* เพิ่มระยะห่างเวลาเนื้อหาตกลงมาบรรทัดใหม่ */
+}
+
+.contact span { margin-right: 45px; } 
+.social-links a { margin: 15px; color: var(--text-gray); text-decoration: none; }
+.social-links a:hover { color: var(--primary-blue); }
+.divider { margin-right: 5px; text-decoration: none; }
+
+/* =========================================
+CSS ส่วนของแถบนำทาง (Navbar)
+========================================= */
+nav 
+{
+    background-color: var(--white); /* พื้นหลังสีขาว */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* เงาบางๆ ใต้ navbar */
+    position: sticky; /* ทำให้ navbar ติดอยู่ด้านบนเวลาเลื่อนลง */
+    top: 0;
+    z-index: 1000; /* ให้อยู่เลเยอร์บนสุดทับสิ่งอื่นๆ */
+    transition: all 0.3s ease; /* เพิ่มแอนิเมชันความนุ่มนวล */
+}
+
+nav.scrolled 
+{
+    box-shadow: 0 5px 20px rgba(0,0,0,0.15); /* เงาเข้มและกว้างขึ้นเมื่อเลื่อนหน้าจอ */
+}
+
+.nav-container 
+{
+    display: flex; /* ใช้ Flexbox เพื่อจัดเรียงแนวนอน */
+    justify-content: space-between; /* ดันโลโก้ไปซ้าย เมนูไปขวา */
+    align-items: center; /* จัดให้อยู่กึ่งกลางแนวตั้ง */
+    height: 80px; /* ความสูงของ navbar */
+    transition: height 0.3s ease; /* เพิ่มแอนิเมชันความนุ่มนวลเวลาปรับความสูง */
+}
+
+nav.scrolled .nav-container 
+{
+    height: 75px; /* ลดความสูงของ Navbar ลงเหลือ 60px เมื่อเลื่อนหน้าจอ */
+}
+
+/* จัดกลุ่มโลโก้รูปภาพและข้อความให้อยู่ติดกัน */
+.logo-container 
+{
+    display: flex;
+    align-items: center;
+    gap: 15px; /* ระยะห่างระหว่างรูปภาพและข้อความ */
+}
+
+.logo-container img {
+    flex-shrink: 0; /* ป้องกันไม่ให้รูปภาพโลโก้ถูกบีบจนเสียสัดส่วนเวลาพื้นที่แคบลง */
+    object-fit: contain;
+}
+
+.logo 
+{
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--primary-blue);
+    text-decoration: none; /* เอาเส้นใต้ลิงก์ออกกรณีที่โลโก้เป็น <a> */
+    line-height: 1.2; /* ปรับลดระยะห่างระหว่างบรรทัดให้ข้อความชิดกันขึ้น */
+}
+
+.nav-links 
+{
+    display: flex; /* จัดเมนูย่อยเป็นแนวนอน */
+    list-style: none; /* เอาจุดหน้า list ออก */
+    gap: 50px; /* ระยะห่างระหว่างแต่ละเมนู */
+}
+
+.nav-links a 
+{
+    text-decoration: none;
+    color: var(--text-dark);
+    font-weight: 500;
+    white-space: nowrap; /* ป้องกันข้อความเมนูตกบรรทัดเมื่อหน้าจอถูกบีบ */
+    transition: color 0.5s; /* แอนิเมชันตอนเปลี่ยนสี */
+}
+
+.nav-links a:hover { color: var(--primary-blue); /* เอาเมาส์ชี้เปลี่ยนเป็นสีน้ำเงิน */ }
+
+/* -- เมนู Dropdown -- */
+.nav-links li {
+    position: relative; /* เพื่อให้ dropdown อิงตำแหน่งจากเมนูแม่ (ไม่ลอยไปที่อื่น) */
+}
+
+.dropdown-menu {
+    display: none; /* ซ่อนเมนูย่อยไว้ก่อน */
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--white);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    list-style: none;
+    min-width: 220px; /* ความกว้างขั้นต่ำของกล่องเมนูย่อย */
+    border-radius: 8px;
+    padding: 10px 0;
+    z-index: 1000;
+    flex-direction: column;
+    gap: 0; /* ล้างค่า gap จากเมนูหลัก */
+}
+
+.dropdown.active .dropdown-menu {
+    display: flex; /* แสดง dropdown เมื่อมีการคลิกและมีคลาส active */
+}
+
+.dropdown-menu a {
+    display: block;
+    padding: 12px 20px;
+    font-size: 0.95rem;
+}
+
+.dropdown-menu a:hover {
+    background-color: var(--light-blue);
+}
+
+/* =========================================
+CSS ส่วนของปุ่มต่างๆ (Buttons & Utilities)
+========================================= */
+.btn-apply 
+{
+    background-color: #1a73e8;
+    color: var(--white);
+    padding: 12px 24px;
+    border-radius: 8px; /* ทำให้ปุ่มโค้งมน */
+    text-decoration: none;
+    font-weight: 500;
+    transition: 0.3s;
+    box-shadow: 0 4px 10px rgba(19, 96, 196, 0.3);
+}
+
+.btn-apply:hover { background-color: #004494; /* สีเข้มขึ้นเมื่อเอาเมาส์ชี้ */ }
+
+/* คลาสปุ่มรองแบบโปร่งใส */
+.btn-outline 
+{
+    background-color: transparent;
+    color: #1a73e8;
+    border: 1px solid var(--primary-blue);
+}
+
+.btn-outline:hover 
+{
+    background-color: var(--light-blue);
+}
+
+
+
+/* คลาสจัดระเบียบปุ่มในส่วน Hero */
+.hero-buttons 
+{
+    display: flex;
+    gap: 15px; /* ระยะห่างระหว่างปุ่ม */
+    flex-wrap: wrap; /* ให้ปุ่มเรียงลงมาด้านล่างได้ถ้าหน้าจอถูกซูมหรือแคบเกินไป */
+}
+
+/* ปุ่มแฮมเบอร์เกอร์สำหรับมือถือ (ซ่อนไว้ในจอคอม) */
+.mobile-menu-btn 
+{
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* =========================================
+CSS ส่วน Hero (ส่วนแนะนำบนสุด)
+========================================= */
+.hero 
+{
+    position: relative; /* สำหรับให้ปุ่มและ dots ลอยอยู่ด้านบน */
+    overflow: hidden; /* ซ่อนส่วนที่ล้นออกไป */
+}
+
+.hero-slides {
+    display: flex; /* นำสไลด์ทั้งหมดมาเรียงต่อกันในแนวนอน */
+    transition: transform 1.2s ease-in-out; /* ความเร็วและความนุ่มนวลในการสไลด์เปลี่ยนภาพ */
+}
+
+.slide {
+    min-width: 100%; /* บังคับให้สไลด์แต่ละอันกว้างเต็มหน้าจอพอดี */
+    background-size: cover;
+    background-position: center;
+    padding: 80px 0; /* ระยะห่างบนล่าง (ย้ายมาจาก .hero) */
+}
+
+/* ปุ่มเลื่อน (Arrows) */
+.slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.6);
+    color: var(--primary-blue);
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 10;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.slider-btn:hover { background-color: var(--primary-blue); color: var(--white); }
+.slider-btn.prev { left: 20px; }
+.slider-btn.next { right: 20px; }
+
+/* จุดนำทาง (Dots) */
+.slider-dots {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+    text-align: center;
+    z-index: 10;
+}
+.dot {
+    cursor: pointer;
+    height: 12px;
+    width: 12px;
+    margin: 0 5px;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.dot.active, .dot:hover {
+    background-color: var(--primary-blue);
+}
+
+.hero-container 
+{
+    display: flex; /* แบ่งเป็น 2 คอลัมน์ (ซ้ายข้อความ ขวารูป) */
+    align-items: center;
+    gap: 50px; /* ระยะห่างระหว่างคอลัมน์ */
+}
+
+.hero-content { flex: 1; /* กินพื้นที่ครึ่งนึง */ }
+
+.hero-content h1 
+{
+    font-size: 3rem; /* ขนาดตัวอักษรใหญ่มาก */
+    color: var(--primary-blue);
+    margin-bottom: 10px;
+    line-height: 1.2;
+}
+
+.hero-content h2 
+{
+    font-size: 2rem;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+}
+
+.hero-content p 
+{
+    color: var(--text-gray);
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+}
+
+.hero-image 
+{
+    flex: 1; /* กินพื้นที่อีกครึ่งนึง */
+    text-align: center;
+}
+
+.hero-image img 
+{
+    width: 100%; /* ให้ความกว้างยืดหยุ่น */
+    max-width: 450px; /* จำกัดขนาดความกว้างสูงสุดไม่ให้ใหญ่เกินไปบนจอคอม */
+    height: 350px; /* กำหนดความสูงตายตัว ป้องกันปัญหาสไลด์กระโดดเวลาสลับภาพ */
+    object-fit: contain; /* รักษาสัดส่วนรูปภาพไม่ให้บิดเบี้ยว และไม่ถูกตัด */
+    border-radius: 20px; /* ขอบรูปมน */
+}
+
+/* =========================================
+CSS ส่วน Features (จุดเด่นของสาขา)
+========================================= */
+.features 
+{
+    padding: 20px 0;
+    background-color: var(--white);
+}
+
+.section-title 
+{
+    text-align: center; /* จัดหัวข้อให้อยู่ตรงกลาง */
+    color: var(--primary-blue);
+    font-size: 1.85rem;
+    margin-bottom: 20px;
+}
+
+.features-grid 
+{
+    display: grid; /* ใช้ Grid ในการจัดเรียงการ์ด */
+    /* จัดเรียงคอลัมน์อัตโนมัติ ขนาดขั้นต่ำ 250px ถ้ากว้างพอก็ขยาย 1 ส่วนเท่าๆกัน */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 30px; /* ระยะห่างระหว่างการ์ด */
+}
+
+.feature-card 
+{
+    background: var(--white);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08); /* ใส่เงาให้การ์ดดูนูนขึ้นมา */
+    border: 1px solid #eee; /* ขอบบางๆ */
+    transition: transform 0.3s; /* แอนิเมชันตอนเด้ง */
+}
+
+.feature-card:hover { transform: translateY(-10px); /* เอาเมาส์ชี้แล้วการ์ดลอยขึ้น */ }
+
+.feature-icon 
+{
+    width: 70px;
+    height: 70px;
+    background-color: var(--primary-blue);
+    color: var(--white);
+    border-radius: 50%; /* ทำเป็นวงกลม */
+    display: flex; /* จัดไอคอนให้อยู่ตรงกลางวงกลม */
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin: 0 auto 20px; /* จัดให้อยู่ตรงกลางแนวนอน เว้นล่าง 20px */
+}
+
+.feature-card h3 
+{
+    margin-bottom: 15px;
+    color: var(--text-dark);
+}
+
+/* =========================================
+CSS ส่วน Portfolio (ผลงานของนักศึกษา)
+========================================= */
+.portfolio-section 
+{
+    padding: 20px 0;
+    background-color: var(--white); /* เปลี่ยนสีพื้นหลังเป็นฟ้าอ่อนเพื่อแยกสัดส่วนให้ชัดเจน */
+}
+
+.portfolio-slider-wrapper {
+    position: relative;
+}
+
+.portfolio-grid 
+{
+    display: flex;
+    gap: 30px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    scrollbar-width: none; /* ซ่อน Scrollbar สำหรับ Firefox */
+    padding: 10px 5px 30px 5px; /* เผื่อพื้นที่ให้เงาเวลา Hover ไม่ให้ถูกตัด */
+}
+.portfolio-grid::-webkit-scrollbar { display: none; /* ซ่อน Scrollbar สำหรับ Chrome/Safari */ }
+
+.portfolio-card 
+{
+    background: var(--white);
+    padding: 40px 30px; /* ปรับลด padding เดิมให้สมดุลขึ้น */
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+    border: 1px solid #eee;
+    transition: transform 0.3s;
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    flex: 0 0 calc(25% - 22.5px); /* แสดง 4 การ์ดต่อ 1 แถว */
+    scroll-snap-align: start; /* ล็อกตำแหน่งให้หยุดพอดีการ์ดเวลาเลื่อน */
+}
+
+.portfolio-card:hover { transform: translateY(-10px); }
+
+.portfolio-icon {
+    width: 70px;
+    height: 70px;
+    background-color: var(--primary-blue);
+    color: var(--white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    margin: 0 auto 20px;
+}
+
+.portfolio-card h3 {
+    margin-bottom: 15px;
+    color: var(--text-dark);
+}
+
+.portfolio-card:hover .view-more {
+    color: var(--primary-blue); /* เปลี่ยนสีข้อความ 'ดูรายละเอียด' เมื่อเอาเมาส์ชี้ */
+}
+
+.view-more {
+    display: inline-block;
+    margin-top: 15px;
+    font-size: 0.95rem;
+    font-weight: 500;
+    color: var(--text-gray);
+    transition: color 0.3s;
+}
+
+/* ปุ่มเลื่อน (Arrows) ของ Portfolio */
+.portfolio-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--white);
+    color: var(--primary-blue);
+    border: 1px solid var(--border-color);
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 10;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+.portfolio-btn:hover { background-color: var(--primary-blue); color: var(--white); border-color: var(--primary-blue); }
+.portfolio-btn.prev { left: -20px; }
+.portfolio-btn.next { right: -20px; }
+
+/* =========================================
+CSS ส่วนอาจารย์ประจำสาขา และ ข่าวสาร (Faculty & News)
+========================================= */
+.faculty-news {
+    background-color: #f8f9fa; /* สีพื้นหลังเทาอ่อนให้ตัดกับ section ก่อนหน้า */
+    background-color: var(--bg-main); /* สีพื้นหลังเทาอ่อนให้ตัดกับ section ก่อนหน้า */
+}
+
+.section-padding { padding: 10px 0; }
+
+.split-layout {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr; /* แบ่ง 2 ฝั่ง ฝั่งซ้าย 60% ฝั่งขวา 40% */
+    gap: 40px;
+}
+
+.section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 2px solid var(--primary-blue);
+    padding-bottom: 10px;
+    margin-bottom: 25px;
+}
+
+.section-title-left { color: var(--primary-blue); font-size: 1.5rem; }
+.view-all { color: var(--text-gray); text-decoration: none; font-size: 0.9rem; transition: 0.3s; }
+.view-all:hover { color: var(--primary-blue); }
+
+/* -- การ์ดอาจารย์ -- */
+.faculty-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    max-height: 550px; /* จำกัดความสูงสูงสุด */
+    overflow-y: auto; /* แสดง scrollbar อัตโนมัติเมื่อเนื้อหาล้น */
+    padding-right: 10px; /* เว้นระยะขวาไม่ให้ scrollbar ทับการ์ด */
+    overscroll-behavior-y: contain; /* ป้องกันไม่ให้หน้าเว็บหลักเลื่อนตามเวลาเลื่อน Scrollbar ภายใน */
+}
+
+.faculty-card {
+    background: var(--white);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+    transition: 0.3s;
+}
+.faculty-card:hover { transform: translateY(-5px); box-shadow: 0 8px 15px rgba(0,0,0,0.1); }
+
+.profile-pic {
+    width: 100px; height: 100px;
+    border-radius: 50%;
+    background-color: var(--light-blue);
+    margin: 0 auto 15px;
+    border: 3px solid var(--white);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.faculty-card h5 { color: var(--text-dark); font-size: 1.05rem; margin-bottom: 5px; }
+.role { color: var(--primary-blue); font-size: 0.85rem; font-weight: 500; margin-bottom: 15px; }
+
+.expertise { list-style: none; padding: 10px; background: #f8f9fa; border-radius: 8px; font-size: 0.8rem; color: var(--text-gray); text-align: left; margin-bottom: 15px; }
+.expertise { list-style: none; padding: 10px; background: var(--bg-main); border-radius: 8px; font-size: 0.8rem; color: var(--text-gray); text-align: left; margin-bottom: 15px; }
+.expertise li { margin-bottom: 5px; }
+.expertise li::before { content: "\2022 "; color: var(--primary-blue); }
+
+.faculty-social { display: flex; justify-content: center; gap: 15px; }
+.faculty-social i { color: var(--text-gray); font-size: 1.1rem; cursor: pointer; transition: 0.3s; }
+.faculty-social i:hover { color: var(--primary-blue); }
+
+/* -- การ์ดข่าวสาร -- */
+.news-list { 
+    display: flex; 
+    flex-direction: column; 
+    gap: 15px; 
+    max-height: 550px; /* จำกัดความสูงให้เท่ากับฝั่งอาจารย์ */
+    overflow-y: auto; /* แสดง scrollbar อัตโนมัติเมื่อเนื้อหาล้น */
+    padding-right: 10px; 
+    overscroll-behavior-y: contain; /* ป้องกันไม่ให้หน้าเว็บหลักเลื่อนตาม */
+}
+
+.news-item {
+    display: flex;
+    gap: 15px;
+    background: var(--white);
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border: 1px solid #eee;
+    align-items: center;
+    transition: 0.3s;
+    cursor: pointer;
+}
+.news-item:hover { transform: translateX(5px); border-color: var(--light-blue); }
+
+.news-img { width: 100px; height: 80px; border-radius: 8px; background-color: var(--light-blue); flex-shrink: 0; }
+.news-content h4 { color: var(--text-dark); font-size: 0.95rem; margin-bottom: 8px; line-height: 1.4; }
+.date { color: var(--text-gray); font-size: 0.85rem; }
+.date i { color: var(--primary-blue); margin-right: 5px; }
+
+/* -- ตกแต่ง Scrollbar (Custom Scrollbar) -- */
+.faculty-grid::-webkit-scrollbar, .news-list::-webkit-scrollbar {
+    width: 6px; /* ความกว้างของ scrollbar */
+}
+.faculty-grid::-webkit-scrollbar-track, .news-list::-webkit-scrollbar-track {
+    background: #e9ecef; /* สีพื้นหลังของราง scroll */
+    border-radius: 10px;
+}
+.faculty-grid::-webkit-scrollbar-thumb, .news-list::-webkit-scrollbar-thumb {
+    background: #bacad6; /* สีของแถบเลื่อน */
+    border-radius: 10px;
+}
+.faculty-grid::-webkit-scrollbar-thumb:hover, .news-list::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-blue); /* สีตอนเอาเมาส์ชี้แถบเลื่อน */
+}
+
+/* =========================================
+CSS ส่วน Call to Action (CTA - เชิญชวนสมัครเรียน)
+========================================= */
+.cta-section {
+    padding: 25px 0; /* เว้นระยะห่างบนล่างไม่ให้ติดกับส่วนอื่น */
+}
+
+.cta-banner {
+    background: linear-gradient(135deg, var(--primary-blue), #003d82);
+    color: var(--white);
+    padding: 40px 8%; /* ปรับ padding บนล่างให้สมดุล (แก้จาก 2px เป็น 40px) */
+    border-radius: 25px;
+    box-shadow: 0 15px 30px rgba(0, 86, 179, 0.2); /* เพิ่มเงาให้กล่องดูลอยขึ้นมา มีมิติ */
+}
+
+.cta-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 30px;
+}
+
+.cta-text h2 {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+}
+
+.cta-text p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.btn-light {
+    background-color: var(--white);
+    color: var(--primary-blue);
+    padding: 15px 30px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    white-space: nowrap; /* ป้องกันข้อความในปุ่มตกบรรทัด */
+}
+
+.btn-light:hover {
+    background-color: #f8f9fa;
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+}
+
+/* --- Footer --- */
+.site-footer {
+    background-color: var(--dark-blue);
+    color: var(--white);
+    padding: 60px 0 20px;
+}
+
+.footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+}
+
+/* จัดกลุ่มโลโก้และข้อความใน Footer ให้อยู่ติดกัน */
+.logo-footer { 
+    display: flex; 
+    align-items: center; 
+    gap: 15px; 
+    margin-bottom: 20px; 
+}
+.logo-footer-text {
+    color: var(--white);
+    font-weight: 500;
+    line-height: 1.2;
+}
+.footer-info p { color: #d1d5db; font-size: 0.9rem; margin-bottom: 10px; line-height: 1.8; }
+.footer-links h4, .footer-social h4 { font-size: 1.2rem; margin-bottom: 20px; color: var(--white); }
+.footer-links ul { list-style: none; padding: 0; }
+.footer-links ul li { margin-bottom: 10px; }
+.footer-links ul li a { color: #d1d5db; font-size: 0.95rem; text-decoration: none; transition: color 0.3s ease; }
+.footer-links ul li a:hover { color: var(--white); }
+
+.social-icons { display: flex; gap: 15px; }
+.social-icons a {
+    width: 40px; height: 40px;
+    background-color: transparent; /* เอาพื้นหลังวงกลมออก */
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2rem; /* ขยายขนาดไอคอนให้ใกล้เคียงของจริง */
+    text-decoration: none; /* เอาเส้นใต้ของลิงก์ออก */
+    transition: transform 0.3s ease; /* แอนิเมชันตอนเอาเมาส์ชี้ */
+}
+.social-icons a:hover { transform: scale(1.15); /* ชี้แล้วขยายขึ้นนิดนึง */ }
+
+/* สีแบรนด์อย่างเป็นทางการ */
+.brand-facebook { color: #1877F2; }
+.brand-youtube { color: #ff0000; }
+.brand-tiktok { 
+    color: #ffffff; 
+    filter: drop-shadow(2px 2px 0px #ff0050) drop-shadow(-2px -2px 0px #00f2fe); /* เอฟเฟกต์ 3D ของ TikTok */
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    color: #d1d5db;
+    font-size: 0.85rem;
+}
+
+/* =========================================
+Media Queries (ทำให้เว็บยืดหยุ่นบนมือถือ - Responsive)
+========================================= */
+@media (max-width: 1280px) 
+{
+    /* เมื่อผู้ใช้ย่อหน้าจอ หรือซูมเบราว์เซอร์ถึง 150% ให้เปลี่ยนเมนูเป็นปุ่มขีดสามขีด */
+    .nav-links, .d-none-mobile 
+    { display: none; /* ซ่อนเมนูแนวนอนและปุ่ม */ }
+
+    .mobile-menu-btn 
+    { display: block; /* แสดงปุ่มแฮมเบอร์เกอร์แทน */ }
+
+    .nav-links.active 
+    {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: white;
+        padding: 20px;
+        box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+    }
+
+    .dropdown-menu {
+        position: relative;
+        box-shadow: none;
+        background-color: #f8f9fa;
+        background-color: var(--bg-main);
+        margin-top: 10px;
+    }
+
+    .logo 
+    {
+        font-size: 1.25rem; /* ย่อขนาดตัวอักษรโลโก้ลงเล็กน้อย */
+    }
+
+    /* ปรับให้ Slider แสดง 3 การ์ด */
+    .portfolio-card {
+        flex: 0 0 calc(33.333% - 20px);
+    }
+}
+
+@media (max-width: 992px) 
+{
+    /* เมื่อหน้าจอเล็กกว่า 992px (แท็บเล็ต) */
+    .hero-container 
+    {
+        flex-direction: column; /* เปลี่ยนจากซ้ายขวา เป็นบนล่าง */
+        text-align: center; /* จัดข้อความกึ่งกลาง */    
+    }
+
+    /* ปรับ Footer เป็น 2 คอลัมน์บนแท็บเล็ต */
+    .footer-grid 
+    {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    /* จัดเรียง Section ข่าวสารและอาจารย์ในแท็บเล็ตให้ซ้อนกันบนล่าง */
+    .split-layout 
+    {
+        grid-template-columns: 1fr; 
+        gap: 50px;
+    }
+
+    /* ปรับให้ Slider แสดง 2 การ์ด */
+    .portfolio-card {
+        flex: 0 0 calc(50% - 15px);
+    }
+}
+
+@media (max-width: 768px) 
+{  
+    .hero-content h1 
+    { font-size: 2.2rem; } /* ย่อขนาดตัวอักษรลง */
+
+    .hero-content h2 
+    { font-size: 1.5rem; }
+
+    .hero-image img 
+    { height: 250px; /* ปรับลดความสูงของรูปในสไลด์ให้พอดีกับหน้าจอมือถือ */ }
+            
+/* จัดเรียง Top bar ในหน้าจอมือถือใหม่ให้อยู่ตรงกลางบน-ล่าง */
+.top-bar-inner 
+{
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+}
+
+/* ลบ margin ขวาออก แล้วให้แสดงผลเป็นบรรทัดเพื่อไม่ให้ข้อความเบี้ยว */
+.contact span { margin-right: 0; display: block; margin-bottom: 5px; }
+            
+.logo 
+{ font-size: 1.1rem; } /* ย่อโลโก้ลงเพื่อไม่ให้เบียดปุ่มแฮมเบอร์เกอร์ */
+            
+.hero-buttons 
+{ justify-content: center; /* จัดปุ่มให้อยู่กึ่งกลางบนมือถือ */ }
+
+/* ปรับ Footer เป็น 1 คอลัมน์บนมือถือ */
+.footer-grid 
+{
+    grid-template-columns: 1fr;
+    text-align: center;
+}
+
+/* จัดให้โลโก้ Footer อยู่กึ่งกลางเมื่อเป็นมือถือ */
+.logo-footer {
+    justify-content: center;
+}
+
+.social-icons 
+{ justify-content: center; /* จัดไอคอนโซเชียลให้อยู่กึ่งกลาง */ }
+
+/* จัดการ CTA ในหน้าจอมือถือ */
+.cta-inner {
+    flex-direction: column;
+    text-align: center;
+}
+
+.cta-text h2 {
+    font-size: 1.6rem;
+}
+
+/* ปรับให้ Slider แสดง 1 การ์ด และซ่อนปุ่มเลื่อนให้ใช้นิ้วปัดแทน */
+.portfolio-card {
+    flex: 0 0 100%;
+}
+.portfolio-btn {
+    display: none;
+}
+}
